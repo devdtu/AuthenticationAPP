@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
+var passport = require('passport'); // include passport
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
@@ -66,19 +66,28 @@ router.post('/register', function(req, res){
 	}
 });
 
+// for authentication we will use passport
+
+//Below fucntion gets the username and matches it and validates the password
 passport.use(new LocalStrategy(
   function(username, password, done) {
+
+  	//call the model function 
    User.getUserByUsername(username, function(err, user){
    	if(err) throw err;
    	if(!user){
+   		// if there is not a match then we do this 
    		return done(null, false, {message: 'User not found'});
    	}
 
+ // now we will compare the password
    	User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){
+   			// Password matched 
    			return done(null, user);
    		} else {
+   			// wrong password
    			return done(null, false, {message: 'Enter the correct password'});
    		}
    	});
@@ -95,14 +104,18 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// post request for /login
 router.post('/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}));
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true})); 
+//suucessredirect and failure redirect are basically route options on success or failure
+
 
 router.get('/logout', function(req, res){
 	req.logout();
 //	console.log("i am in logout");
 	req.flash('success_msg', 'Log Out Successfull');
 
+// after logout go to login page
 	res.redirect('/users/login');
 });
 
