@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 //connect to Our Database
-mongoose.connect('mongodb://localhost/loginapp');
+mongoose.connect('mongodb:172-31-44-190:~/stack/mongodb');
 var db = mongoose.connection;
 
 //include the file we are gonna use for routes
@@ -86,7 +86,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 80));
 
 //start the server
 app.listen(app.get('port'), function(){
