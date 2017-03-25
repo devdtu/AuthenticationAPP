@@ -86,7 +86,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT || 80));
+app.set('port', (process.env.PORT || 8080));
 
 //start the server
 app.listen(app.get('port'), function(){
