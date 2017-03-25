@@ -12,7 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 //connect to Our Database
-mongoose.connect('mongodb:172-31-44-190:~/stack/mongodb');
+mongoose.connect('mongodb://Dev:1.DTU%40maq.2@ec2-52-37-91-121.us-west-2.compute.amazonaws.com:27017/dummyDB');
 var db = mongoose.connection;
 
 //include the file we are gonna use for routes
